@@ -9,29 +9,29 @@ Keen.ready(function(){
   var timeframe = "last_30_days"
 
   var bugs_2014 = new Keen.Query("sum", {
-    eventCollection: "product_snapshot",
+    eventCollection: "product_snapshot_final",
     targetProperty: "bug_type.total_bugs",
     groupBy: "quarter",
     filters: [{"property_name":"start_year","operator":"eq","property_value":2014}]
   });
 
   var bugs_2013 = new Keen.Query("sum", {
-    eventCollection: "product_snapshot",
+    eventCollection: "product_snapshot_final",
     targetProperty: "bug_type.total_bugs",
     groupBy: "quarter",
     filters: [{"property_name":"start_year","operator":"eq","property_value":2013}]
   });
 
   var bugs_2012 = new Keen.Query("sum", {
-    eventCollection: "product_snapshot",
+    eventCollection: "product_snapshot_final",
     targetProperty: "bug_type.total_bugs",
     groupBy: "quarter",
     filters: [{"property_name":"start_year","operator":"eq","property_value":2012}]
   });
 
 
-  var multi_query_bcm_2012 = new Keen.Query("multi_analysis", {
-    eventCollection: "product_snapshot",
+  var multi_query_bcm_2012_iOS = new Keen.Query("multi_analysis", {
+    eventCollection: "product_snapshot_final",
     analyses: {"bugs_blocker": {
     					"analysis_type": "sum",
     					"target_property":
@@ -63,11 +63,11 @@ Keen.ready(function(){
 
     		  },
     groupBy: "quarter",
-    filters: [{"property_name":"start_year","operator":"eq","property_value":2012}]
+    filters: [{"property_name":"start_year","operator":"eq","property_value":2012},{"property_name":"platform","operator":"eq","property_value":"iOS"}]
   });
 
-  var multi_query_bcm_2013 = new Keen.Query("multi_analysis", {
-    eventCollection: "product_snapshot",
+  var multi_query_bcm_2013_iOS = new Keen.Query("multi_analysis", {
+    eventCollection: "product_snapshot_final",
     analyses: {"bugs_blocker": {
     					"analysis_type": "sum",
     					"target_property":
@@ -99,11 +99,11 @@ Keen.ready(function(){
 
     		  },
     groupBy: "quarter",
-    filters: [{"property_name":"start_year","operator":"eq","property_value":2013}]
+    filters: [{"property_name":"start_year","operator":"eq","property_value":2013},{"property_name":"platform","operator":"eq","property_value":"iOS"}]
   });
 
-  var multi_query_bcm_2014 = new Keen.Query("multi_analysis", {
-    eventCollection: "product_snapshot",
+  var multi_query_bcm_2014_iOS = new Keen.Query("multi_analysis", {
+    eventCollection: "product_snapshot_final",
     analyses: {"bugs_blocker": {
     					"analysis_type": "sum",
     					"target_property":
@@ -135,7 +135,115 @@ Keen.ready(function(){
 
     		  },
     groupBy: "quarter",
-    filters: [{"property_name":"start_year","operator":"eq","property_value":2014}]
+    filters: [{"property_name":"start_year","operator":"eq","property_value":2014},{"property_name":"platform","operator":"eq","property_value":"iOS"}]
+  });
+
+   var multi_query_bcm_2012_Android = new Keen.Query("multi_analysis", {
+    eventCollection: "product_snapshot_final",
+    analyses: {"bugs_blocker": {
+              "analysis_type": "sum",
+              "target_property":
+              "bug_type.blocker"
+            },
+           "bugs_critical": {
+              "analysis_type": "sum",
+              "target_property":
+              "bug_type.critical"
+            },
+          "bugs_major": {
+              "analysis_type": "sum",
+              "target_property":
+              "bug_type.major"
+            },
+          "bugs_total":
+            {
+              "analysis_type": "sum",
+              "target_property":
+              "bug_type.total_bugs"
+            },
+          "bugs_invalid":
+            {
+              "analysis_type": "sum",
+              "target_property":
+              "bug_type.invalid"
+            }
+
+
+          },
+    groupBy: "quarter",
+    filters: [{"property_name":"start_year","operator":"eq","property_value":2012},{"property_name":"platform","operator":"eq","property_value":"Android"}]
+  });
+
+  var multi_query_bcm_2013_Android = new Keen.Query("multi_analysis", {
+    eventCollection: "product_snapshot_final",
+    analyses: {"bugs_blocker": {
+              "analysis_type": "sum",
+              "target_property":
+              "bug_type.blocker"
+            },
+           "bugs_critical": {
+              "analysis_type": "sum",
+              "target_property":
+              "bug_type.critical"
+            },
+          "bugs_major": {
+              "analysis_type": "sum",
+              "target_property":
+              "bug_type.major"
+            },
+          "bugs_total":
+            {
+              "analysis_type": "sum",
+              "target_property":
+              "bug_type.total_bugs"
+            },
+          "bugs_invalid":
+            {
+              "analysis_type": "sum",
+              "target_property":
+              "bug_type.invalid"
+            }
+
+
+          },
+    groupBy: "quarter",
+    filters: [{"property_name":"start_year","operator":"eq","property_value":2013},{"property_name":"platform","operator":"eq","property_value":"Android"}]
+  });
+
+  var multi_query_bcm_2014_Android = new Keen.Query("multi_analysis", {
+    eventCollection: "product_snapshot_final",
+    analyses: {"bugs_blocker": {
+              "analysis_type": "sum",
+              "target_property":
+              "bug_type.blocker"
+            },
+           "bugs_critical": {
+              "analysis_type": "sum",
+              "target_property":
+              "bug_type.critical"
+            },
+          "bugs_major": {
+              "analysis_type": "sum",
+              "target_property":
+              "bug_type.major"
+            },
+          "bugs_total":
+            {
+              "analysis_type": "sum",
+              "target_property":
+              "bug_type.total_bugs"
+            },
+          "bugs_invalid":
+            {
+              "analysis_type": "sum",
+              "target_property":
+              "bug_type.invalid"
+            }
+
+
+          },
+    groupBy: "quarter",
+    filters: [{"property_name":"start_year","operator":"eq","property_value":2014},{"property_name":"platform","operator":"eq","property_value":"Android"}]
   });
 
 
@@ -148,9 +256,9 @@ client.run([bugs_2014, bugs_2013, bugs_2012], function(response){ // run the que
 
     var data = data1.concat(result2014);
 
-    //console.log("Combined Data: " + JSON.stringify(data));
-/*
-    while (i < result1.length) {
+    //console.log("2014 data: " + result2014);
+
+    /*while (i < result1.length) {
 
         data[i]={ // format the data so it can be charted
             timeframe: result1[i]["timeframe"],
@@ -178,28 +286,34 @@ client.run([bugs_2014, bugs_2013, bugs_2012], function(response){ // run the que
     
 });
 
-client.run([multi_query_bcm_2012,multi_query_bcm_2013,multi_query_bcm_2014], function(response)
+client.run([multi_query_bcm_2012_iOS,multi_query_bcm_2013_iOS,multi_query_bcm_2014_iOS,multi_query_bcm_2012_Android,multi_query_bcm_2013_Android,multi_query_bcm_2014_Android], function(response)
 {
 	console.log("In the multi-query function");
-	var result_2012 = response[0].result;
-	var result_2013 = response[1].result;
-	var result_2014 = response[2].result;
+	var result_2012_iOS = response[0].result;
+	var result_2013_iOS = response[1].result;
+	var result_2014_iOS = response[2].result;
+  var result_2012_Android = response[3].result;
+  var result_2013_Android = response[4].result;
+  var result_2014_Android = response[5].result;
 
-	var data1 = result_2012.concat(result_2013);
-
-    var data = data1.concat(result_2014);
+	var data1 = result_2012_iOS.concat(result_2013_iOS);
+  var data2 = data1.concat(result_2014_iOS);
+  var data3 = data2.concat(result_2012_Android);
+  var data4 = data3.concat(result_2013_Android);
+  var data = data4.concat(result_2014_Android);
     
-    //console.log(JSON.stringify(result_2012));
+  //console.log(JSON.stringify(data));
 
-    drawBCMBugs(data);
+  drawBCMBugs(data);
 });
 
 function drawBCMBugs(results)
 {
 	  var data = new google.visualization.DataTable();
       data.addColumn('number', 'X');
-      data.addColumn('number', 'Dogs');
-      data.addColumn('number', 'Cats');
+      data.addColumn('number', 'iOS');
+      data.addColumn('number', 'Android');
+      data.addColumn('number','Avg');
 
       var options = {
         width: 1000,
@@ -217,27 +331,86 @@ function drawBCMBugs(results)
 
       var i = 0;
       console.log("starting loop");
-      while (i < results.length)
+      //There are 4 quarters, 0-3 -> iOS 2012, 
+      var platform_offset = 12;
+      console.log("Length: " + results.length);
+      while (i < (results.length/2))
       {
+        console.log("i: " + i);
       	console.log("Data: " + JSON.stringify(results[i]));
-      	bugs_major = results[i].bugs_major;
-      	bugs_critical = results[i].bugs_critical;
-      	console.log("Critical Bugs: " + bugs_critical);
-      	bugs_blocker = results[i].bugs_blocker;
-      	bugs_total = results[i].bugs_total;
-      	bugs_invalid = results[i].bugs_invalid;
-      	bugs_bcm = bugs_blocker + bugs_critical + bugs_major;
-      	bugs_total = bugs_total - bugs_invalid;
-      	ratio = bugs_bcm/bugs_total;
-      	console.log("Quarter: " + results[i].quarter);
-      	console.log("Ratio: " + ratio);
-      	i++;
-      	//data.addRow([year_begin + ":" + quarter.toString(), results[i].result,default_color])
+
+        //iOS
+      	bugs_major_iOS = results[i].bugs_major;
+      	bugs_critical_iOS = results[i].bugs_critical;
+      	bugs_blocker_iOS = results[i].bugs_blocker;
+      	bugs_total_iOS = results[i].bugs_total;
+      	bugs_invalid_iOS = results[i].bugs_invalid;
+      	bugs_bcm_iOS = bugs_blocker_iOS + bugs_critical_iOS + bugs_major_iOS;
+      	bugs_total_iOS = bugs_total_iOS - bugs_invalid_iOS;
+      	ratio_iOS = bugs_bcm_iOS/bugs_total_iOS;
+
+        var android = i + platform_offset;
+        //Android
+        bugs_major_android = results[android].bugs_major;
+        bugs_critical_android = results[android].bugs_critical;
+        bugs_blocker_android = results[android].bugs_blocker;
+        bugs_total_android = results[android].bugs_total;
+        bugs_invalid_android = results[android].bugs_invalid;
+        bugs_bcm_android = bugs_blocker_android + bugs_critical_android + bugs_major_android;
+        bugs_total_android = bugs_total_android - bugs_invalid_android;
+        ratio_android = bugs_bcm_android/bugs_total_android;
+
+        ratio_avg = (ratio_android + ratio_iOS)/2 
+        i++;
+        data.addRow([i,ratio_iOS,ratio_android, ratio_avg]); 
       }
       
-      //var chart = new google.visualization.LineChart(document.getElementById('ex2'));
+       var options = {
+        width: 1000,
+        height: 563,
+        hAxis: {
+          title: 'By Quarter',
+          ticks: [{v:1,f:'2012 - Q1'}, {v:2,f:'2012 - Q2'}, {v:3,f:'2012 - Q3'}, {v:4,f:'2012 - Q4'},{v:5,f:'2013 - Q1'}, {v:6,f:'2013 - Q2'}, {v:7,f:'2013 - Q3'}, {v:8,f:'2013 - Q1'},
+                  {v:9,f:'2014 - Q1'}, {v:10,f:'2013 - Q2'}, {v:11,f:'2013 - Q3'}, {v:12,f:'2013 - Q4'}],
 
-      //chart.draw(data, options);
+          textStyle: {
+            color: '#000000',
+            fontSize: 12, 
+            bold: true,
+            italic: true
+          },
+          titleTextStyle: {
+            color: '#000000',
+            fontSize: 24,
+            fontName: 'Arial',
+            bold: false,
+            italic: true
+          }
+        },
+        vAxis: {
+          title: 'Percentage',
+          textStyle: {
+            color: '#000000',
+            fontSize: 18, 
+            bold: true
+          },
+          titleTextStyle: {
+            color: '#000000',
+            fontSize: 24, 
+            bold: true
+          },
+          gridlines: {color: '#333', count: 8}
+        },
+        colors: ['#097138', '#a52714','#0000FF'],
+        trendlines: {
+          0: {type: 'linear', color: '#000000', opacity: .4}
+        }
+
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('bcm_chart'));
+
+      chart.draw(data, options); 
 
 }
 

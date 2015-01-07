@@ -3387,7 +3387,7 @@ event_props =  {:product_snapshot_final =>
 						:product => "APP-14-035_LaCoco", 
 						:platform => "iOS",
 						:start_year => 2014,
-						:quarter => 3,
+						:quarter => 2,
 						:bug_type => 
 						{
 							:blocker => 0,
@@ -3432,7 +3432,7 @@ event_props =  {:product_snapshot_final =>
 						:product => "App-14-036_GoogleSantaTracker", 
 						:platform => "Android",
 						:start_year => 2014,
-						:quarter => 4,
+						:quarter => 3,
 						:bug_type => 
 						{
 							:blocker => 0,
@@ -3496,7 +3496,7 @@ event_props =  {:product_snapshot_final =>
 						{
 							:requirements => 0,
 							:reopened_stories => 0,
-							:complexity_points => -147
+							:complexity_points => 147
 						},
 						:qa_data =>
 						{
