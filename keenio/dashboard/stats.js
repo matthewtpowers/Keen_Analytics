@@ -339,11 +339,38 @@ client.run([multi_query_bcm_2012_iOS,multi_query_bcm_2013_iOS,multi_query_bcm_20
   var data = data4.concat(result_2014_Android);
     
   //console.log(JSON.stringify(data));
+  drawMainCharts(data);
 
   drawBCMBugs(data);
   drawBugsCP(data);
 });
 
+function drawAllCharts(results)
+{
+  console.log("In Draw All Charst");
+  var cp_data = new google.visualization.DataTable(); 
+  var bcm_data = new google.visualization.DataTable();
+
+  //Setup the columns for the graphs
+  cp_data.addColumn('number', 'X');
+  cp_data.addColumn('number', 'iOS');
+  cp_data.addColumn('number', 'Android');
+  cp_data.addColumn('number','Avg');
+
+  bcm_data = cp_data;
+
+  var count = 0;
+  var platform_offset = 12;
+  while (count < results.length/2)
+  {
+    buildCP();
+
+  }
+
+  //style the chart
+  //draw the chart
+
+}
 function drawBugsCP(results)
 {
       var data = new google.visualization.DataTable();
@@ -360,7 +387,7 @@ function drawBugsCP(results)
       while (i < (results.length/2))
       {
         console.log("i: " + i);
-        console.log("Data: " + JSON.stringify(results[i]));
+        //console.log("Data: " + JSON.stringify(results[i]));
 
         //iOS 
         bugs_total_iOS = results[i].bugs_total;
@@ -372,6 +399,7 @@ function drawBugsCP(results)
         ratio_iOS = bugs_total_iOS/bugs_cp_iOS;
 
         var android = i + platform_offset;
+        console.log("Data: " + JSON.stringify(results[android]));
 
         //Android 
         bugs_total_android = results[android].bugs_total;
@@ -384,7 +412,7 @@ function drawBugsCP(results)
 
         ratio_avg = (ratio_android + ratio_iOS)/2 
         i++;
-        data.addRow([i,1,ratio_android, 1]); 
+        data.addRow([i,ratio_iOS,ratio_android, 1]); 
       }
 
       var options = {
