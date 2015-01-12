@@ -20,21 +20,21 @@ event_props =  {:product_snapshot =>
 						{
 							:blocker => 0,
 							:critical => 0,
-							:major => -4,
-							:normal => -12,
-							:minor => -4,
-							:design => -11,
+							:major => 10,
+							:normal => 6,
+							:minor => 6,
+							:design => 1,
 							:enhancement => 0,
-							:total_bugs => -31,
+							:total_bugs =>  23,
 							:reopened => 0,
-							:invalid => -1,
+							:invalid => 0,
 							:client_reported => 0
 						},
 						:story_data => 
 						{
 							:requirements => 0,
 							:reopened_stories => 0,
-							:complexity_points => -147
+							:complexity_points => 41
 						},
 						:qa_data =>
 						{
@@ -64,22 +64,22 @@ event_props =  {:product_snapshot =>
 						:bug_type => 
 						{
 							:blocker => 0,
-							:critical => 0,
-							:major => -1,
-							:normal => -13,
-							:minor => -6,
-							:design => -5,
+							:critical => 3,
+							:major => 25,
+							:normal => 34,
+							:minor => 11,
+							:design => 11,
 							:enhancement => 0,
-							:total_bugs => -25,
+							:total_bugs => 109,
 							:reopened => 0,
-							:invalid => -10,
+							:invalid => 3,
 							:client_reported => 0
 						},
 						:story_data => 
 						{
 							:requirements => 0,
 							:reopened_stories => 0,
-							:complexity_points => -198
+							:complexity_points => 90
 						},
 						:qa_data =>
 						{

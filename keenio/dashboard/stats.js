@@ -58,7 +58,13 @@ Keen.ready(function(){
     					"analysis_type": "sum",
     					"target_property":
     					"bug_type.invalid"
-    				}
+    				},
+            "story_data.complexity_points":
+            {
+              "analysis_type": "sum",
+              "target_property":
+              "story_data.complexity_points"
+            }
 
 
     		  },
@@ -94,7 +100,13 @@ Keen.ready(function(){
     					"analysis_type": "sum",
     					"target_property":
     					"bug_type.invalid"
-    				}
+    				},
+            "story_data.complexity_points":
+            {
+              "analysis_type": "sum",
+              "target_property":
+              "story_data.complexity_points"
+            }
 
 
     		  },
@@ -130,7 +142,13 @@ Keen.ready(function(){
     					"analysis_type": "sum",
     					"target_property":
     					"bug_type.invalid"
-    				}
+    				},
+            "story_data.complexity_points":
+            {
+              "analysis_type": "sum",
+              "target_property":
+              "story_data.complexity_points"
+            }
 
 
     		  },
@@ -166,6 +184,12 @@ Keen.ready(function(){
               "analysis_type": "sum",
               "target_property":
               "bug_type.invalid"
+            },
+            "story_data.complexity_points":
+            {
+              "analysis_type": "sum",
+              "target_property":
+              "story_data.complexity_points"
             }
 
 
@@ -202,6 +226,12 @@ Keen.ready(function(){
               "analysis_type": "sum",
               "target_property":
               "bug_type.invalid"
+            },
+            "story_data.complexity_points":
+            {
+              "analysis_type": "sum",
+              "target_property":
+              "story_data.complexity_points"
             }
 
 
@@ -238,6 +268,12 @@ Keen.ready(function(){
               "analysis_type": "sum",
               "target_property":
               "bug_type.invalid"
+            },
+            "story_data.complexity_points":
+            {
+              "analysis_type": "sum",
+              "target_property":
+              "story_data.complexity_points"
             }
 
 
@@ -305,7 +341,99 @@ client.run([multi_query_bcm_2012_iOS,multi_query_bcm_2013_iOS,multi_query_bcm_20
   //console.log(JSON.stringify(data));
 
   drawBCMBugs(data);
+  drawBugsCP(data);
 });
+
+function drawBugsCP(results)
+{
+      var data = new google.visualization.DataTable();
+
+      data.addColumn('number', 'X');
+      data.addColumn('number', 'iOS');
+      data.addColumn('number', 'Android');
+      data.addColumn('number','Avg');
+
+       var i = 0; 
+      //There are 4 quarters, 0-3 -> iOS 2012, 
+      var platform_offset = 12;
+      console.log("Length: " + results.length);
+      while (i < (results.length/2))
+      {
+        console.log("i: " + i);
+        console.log("Data: " + JSON.stringify(results[i]));
+
+        //iOS 
+        bugs_total_iOS = results[i].bugs_total;
+        bugs_invalid_iOS = results[i].bugs_invalid; 
+        bugs_cp_iOS = results[i].story_data.complexity_points;
+        //console.log("iOS Complexity Points: " + bugs_cp_iOS);
+        bugs_total_iOS = bugs_total_iOS - bugs_invalid_iOS; 
+        //console.log("iOS Total Bugs: " + bugs_total_iOS);
+        ratio_iOS = bugs_total_iOS/bugs_cp_iOS;
+
+        var android = i + platform_offset;
+
+        //Android 
+        bugs_total_android = results[android].bugs_total;
+        bugs_invalid_android = results[android].bugs_invalid; 
+        bugs_cp_android = results[android].story_data.complexity_points;
+        console.log("Android Complexity Points: " + bugs_cp_android);
+        bugs_total_android = bugs_total_android - bugs_invalid_android;
+        console.log("Android Total Bugs: " + bugs_total_android);
+        ratio_android = bugs_total_android/bugs_cp_android;
+
+        ratio_avg = (ratio_android + ratio_iOS)/2 
+        i++;
+        data.addRow([i,1,ratio_android, 1]); 
+      }
+
+      var options = {
+        width: 1000,
+        height: 563,
+        hAxis: {
+          title: 'By Quarter',
+          ticks: [{v:1,f:'2012 - Q1'}, {v:2,f:'2012 - Q2'}, {v:3,f:'2012 - Q3'}, {v:4,f:'2012 - Q4'},{v:5,f:'2013 - Q1'}, {v:6,f:'2013 - Q2'}, {v:7,f:'2013 - Q3'}, {v:8,f:'2013 - Q1'},
+                  {v:9,f:'2014 - Q1'}, {v:10,f:'2013 - Q2'}, {v:11,f:'2013 - Q3'}, {v:12,f:'2013 - Q4'}],
+
+          textStyle: {
+            color: '#000000',
+            fontSize: 12, 
+            bold: true,
+            italic: true
+          },
+          titleTextStyle: {
+            color: '#000000',
+            fontSize: 24,
+            fontName: 'Arial',
+            bold: false,
+            italic: true
+          }
+        },
+        vAxis: {
+          title: 'Percentage',
+          textStyle: {
+            color: '#000000',
+            fontSize: 18, 
+            bold: true
+          },
+          titleTextStyle: {
+            color: '#000000',
+            fontSize: 24, 
+            bold: true
+          },
+          gridlines: {color: '#333', count: 8}
+        },
+        colors: ['#097138', '#a52714','#0000FF'],
+        trendlines: {
+          0: {type: 'linear', color: '#000000', opacity: .4}
+        }
+
+      };
+      var chart = new google.visualization.LineChart(document.getElementById('bugs_cp_chart'));
+
+      chart.draw(data, options); 
+      
+}
 
 function drawBCMBugs(results)
 {
@@ -329,15 +457,14 @@ function drawBCMBugs(results)
         }
       };
 
-      var i = 0;
-      console.log("starting loop");
+      var i = 0; 
       //There are 4 quarters, 0-3 -> iOS 2012, 
       var platform_offset = 12;
       console.log("Length: " + results.length);
       while (i < (results.length/2))
       {
-        console.log("i: " + i);
-      	console.log("Data: " + JSON.stringify(results[i]));
+        //console.log("i: " + i);
+      	//console.log("Data: " + JSON.stringify(results[i]));
 
         //iOS
       	bugs_major_iOS = results[i].bugs_major;
