@@ -338,39 +338,115 @@ client.run([multi_query_bcm_2012_iOS,multi_query_bcm_2013_iOS,multi_query_bcm_20
   var data4 = data3.concat(result_2013_Android);
   var data = data4.concat(result_2014_Android);
     
-  //console.log(JSON.stringify(data));
-  drawMainCharts(data);
 
-  drawBCMBugs(data);
-  drawBugsCP(data);
+  console.log(JSON.stringify(data));
+  drawAllCharts(data);
+
+  //drawBCMBugs(data);
+  //drawBugsCP(data);
 });
 
 function drawAllCharts(results)
 {
-  console.log("In Draw All Charst");
-  var cp_data = new google.visualization.DataTable(); 
-  var bcm_data = new google.visualization.DataTable();
+      var cp_data = new google.visualization.DataTable(); 
+      var bcm_data = new google.visualization.DataTable();
 
-  //Setup the columns for the graphs
-  cp_data.addColumn('number', 'X');
-  cp_data.addColumn('number', 'iOS');
-  cp_data.addColumn('number', 'Android');
-  cp_data.addColumn('number','Avg');
+      //Setup the columns for the graphs
+      cp_data.addColumn('number', 'X');
+      cp_data.addColumn('number', 'iOS');
+      cp_data.addColumn('number', 'Android');
+      cp_data.addColumn('number','Avg');
 
-  bcm_data = cp_data;
+      bcm_data = cp_data;
 
-  var count = 0;
-  var platform_offset = 12;
-  while (count < results.length/2)
-  {
-    buildCP();
+      var count = 0;
+      while (count < results.length/2)
+      {
+        
+        buildCP(results, count, cp_data);
+        count++;
 
-  }
+      }
+      //Style the CP Chart
+      var options = styleCP();
+      console.log("Done Building CP"); 
+      
+      var chart = new google.visualization.LineChart(document.getElementById('bugs_cp_chart'));
 
-  //style the chart
-  //draw the chart
+      chart.draw(cp_data, options); 
+      console.log("done drawing the chart");
 
 }
+function styleCP()
+{
+      var options = {
+        width: 1000,
+        height: 563,
+        hAxis: {
+          title: 'By Quarter',
+          ticks: [{v:1,f:'2012 - Q1'}, {v:2,f:'2012 - Q2'}, {v:3,f:'2012 - Q3'}, {v:4,f:'2012 - Q4'},{v:5,f:'2013 - Q1'}, {v:6,f:'2013 - Q2'}, {v:7,f:'2013 - Q3'}, {v:8,f:'2013 - Q1'},
+                  {v:9,f:'2014 - Q1'}, {v:10,f:'2013 - Q2'}, {v:11,f:'2013 - Q3'}, {v:12,f:'2013 - Q4'}],
+
+          textStyle: {
+            color: '#000000',
+            fontSize: 12, 
+            bold: true,
+            italic: true
+          },
+          titleTextStyle: {
+            color: '#000000',
+            fontSize: 24,
+            fontName: 'Arial',
+            bold: false,
+            italic: true
+          }
+        },
+        vAxis: {
+          title: 'Percentage',
+          textStyle: {
+            color: '#000000',
+            fontSize: 18, 
+            bold: true
+          },
+          titleTextStyle: {
+            color: '#000000',
+            fontSize: 24, 
+            bold: true
+          },
+          gridlines: {color: '#333', count: 8}
+        },
+        colors: ['#097138', '#a52714','#0000FF'],
+        trendlines: {
+          0: {type: 'linear', color: '#000000', opacity: .4}
+        }
+
+      };
+      return options;
+}
+function buildCP(results, count, cp_data)
+{
+        var platform_offset = 12;
+
+        //iOS 
+        bugs_total_iOS = results[count].bugs_total;
+        bugs_invalid_iOS = results[count].bugs_invalid; 
+        bugs_cp_iOS = results[count].story_data.complexity_points;
+        bugs_total_iOS = bugs_total_iOS - bugs_invalid_iOS; 
+        ratio_iOS = bugs_total_iOS/bugs_cp_iOS;
+
+        var android = count + platform_offset;
+
+        //Android 
+        bugs_total_android = results[android].bugs_total;
+        bugs_invalid_android = results[android].bugs_invalid; 
+        bugs_cp_android = results[android].story_data.complexity_points;
+        bugs_total_android = bugs_total_android - bugs_invalid_android;
+        ratio_android = bugs_total_android/bugs_cp_android;
+
+        ratio_avg = (ratio_android + ratio_iOS)/2 
+        cp_data.addRow([count,ratio_iOS,ratio_android, ratio_avg]); 
+}
+
 function drawBugsCP(results)
 {
       var data = new google.visualization.DataTable();
