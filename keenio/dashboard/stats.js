@@ -59,6 +59,12 @@ Keen.ready(function(){
     					"target_property":
     					"bug_type.invalid"
     				},
+            "bugs_client_reported":
+            {
+              "analysis_type": "sum",
+              "target_property":
+              "bug_type.client_reported"
+            },
             "story_data.complexity_points":
             {
               "analysis_type": "sum",
@@ -101,6 +107,12 @@ Keen.ready(function(){
     					"target_property":
     					"bug_type.invalid"
     				},
+            "bugs_client_reported":
+            {
+              "analysis_type": "sum",
+              "target_property":
+              "bug_type.client_reported"
+            },
             "story_data.complexity_points":
             {
               "analysis_type": "sum",
@@ -143,6 +155,12 @@ Keen.ready(function(){
     					"target_property":
     					"bug_type.invalid"
     				},
+            "bugs_client_reported":
+            {
+              "analysis_type": "sum",
+              "target_property":
+              "bug_type.client_reported"
+            },
             "story_data.complexity_points":
             {
               "analysis_type": "sum",
@@ -184,6 +202,12 @@ Keen.ready(function(){
               "analysis_type": "sum",
               "target_property":
               "bug_type.invalid"
+            },
+            "bugs_client_reported":
+            {
+              "analysis_type": "sum",
+              "target_property":
+              "bug_type.client_reported"
             },
             "story_data.complexity_points":
             {
@@ -227,6 +251,12 @@ Keen.ready(function(){
               "target_property":
               "bug_type.invalid"
             },
+            "bugs_client_reported":
+            {
+              "analysis_type": "sum",
+              "target_property":
+              "bug_type.client_reported"
+            },
             "story_data.complexity_points":
             {
               "analysis_type": "sum",
@@ -268,6 +298,12 @@ Keen.ready(function(){
               "analysis_type": "sum",
               "target_property":
               "bug_type.invalid"
+            },
+            "bugs_client_reported":
+            {
+              "analysis_type": "sum",
+              "target_property":
+              "bug_type.client_reported"
             },
             "story_data.complexity_points":
             {
@@ -323,8 +359,7 @@ client.run([bugs_2014, bugs_2013, bugs_2012], function(response){ // run the que
 });
 
 client.run([multi_query_bcm_2012_iOS,multi_query_bcm_2013_iOS,multi_query_bcm_2014_iOS,multi_query_bcm_2012_Android,multi_query_bcm_2013_Android,multi_query_bcm_2014_Android], function(response)
-{
-	console.log("In the multi-query function");
+{ 
 	var result_2012_iOS = response[0].result;
 	var result_2013_iOS = response[1].result;
 	var result_2014_iOS = response[2].result;
@@ -338,8 +373,7 @@ client.run([multi_query_bcm_2012_iOS,multi_query_bcm_2013_iOS,multi_query_bcm_20
   var data4 = data3.concat(result_2013_Android);
   var data = data4.concat(result_2014_Android);
     
-
-  console.log(JSON.stringify(data));
+ 
   drawAllCharts(data);
 
   //drawBCMBugs(data);
@@ -350,6 +384,7 @@ function drawAllCharts(results)
 {
       var cp_data = new google.visualization.DataTable(); 
       var bcm_data = new google.visualization.DataTable();
+      var slippage_data = new google.visualization.DataTable();
 
       //Setup the columns for the graphs
       cp_data.addColumn('number', 'X');
@@ -357,35 +392,53 @@ function drawAllCharts(results)
       cp_data.addColumn('number', 'Android');
       cp_data.addColumn('number','Avg');
 
-      bcm_data = cp_data;
+      bcm_data.addColumn('number', 'X');
+      bcm_data.addColumn('number', 'iOS');
+      bcm_data.addColumn('number', 'Android');
+      bcm_data.addColumn('number','Avg');
+
+      slippage_data.addColumn('number', 'X');
+      slippage_data.addColumn('number', 'iOS');
+      slippage_data.addColumn('number', 'Android');
+      slippage_data.addColumn('number','Avg');
 
       var count = 0;
       while (count < results.length/2)
       {
         
         buildCP(results, count, cp_data);
-        count++;
+        buildBCM(results, count, bcm_data);
+        buildSlippage(results, count, slippage_data);
+        count++; 
 
       }
       //Style the CP Chart
-      var options = styleCP();
+      var options = styleGraphs();
       console.log("Done Building CP"); 
       
-      var chart = new google.visualization.LineChart(document.getElementById('bugs_cp_chart'));
+      var cp_chart = new google.visualization.LineChart(document.getElementById('bugs_cp_chart'));
+      var bcm_chart = new google.visualization.LineChart(document.getElementById('bcm_chart')); 
+      var slippage_chart = new google.visualization.LineChart(document.getElementById("bugs_slippage_chart"));
+ 
+      cp_chart.draw(cp_data, options); 
+      bcm_chart.draw(bcm_data, options);
+      slippage_chart.draw(slippage_data, options);
+      
 
-      chart.draw(cp_data, options); 
       console.log("done drawing the chart");
 
 }
-function styleCP()
+
+//Style the Complexity Point Graph
+function styleGraphs()
 {
       var options = {
         width: 1000,
         height: 563,
         hAxis: {
           title: 'By Quarter',
-          ticks: [{v:1,f:'2012 - Q1'}, {v:2,f:'2012 - Q2'}, {v:3,f:'2012 - Q3'}, {v:4,f:'2012 - Q4'},{v:5,f:'2013 - Q1'}, {v:6,f:'2013 - Q2'}, {v:7,f:'2013 - Q3'}, {v:8,f:'2013 - Q1'},
-                  {v:9,f:'2014 - Q1'}, {v:10,f:'2013 - Q2'}, {v:11,f:'2013 - Q3'}, {v:12,f:'2013 - Q4'}],
+          ticks: [{v:0,f:'2012 - Q1'}, {v:1,f:'2012 - Q2'}, {v:2,f:'2012 - Q3'}, {v:3,f:'2012 - Q4'},{v:4,f:'2013 - Q1'}, {v:5,f:'2013 - Q2'}, {v:6,f:'2013 - Q3'}, {v:7,f:'2013 - Q4'},
+                  {v:8,f:'2014 - Q1'}, {v:9,f:'2014 - Q2'}, {v:10,f:'2014 - Q3'}, {v:11,f:'2014 - Q4'}],
 
           textStyle: {
             color: '#000000',
@@ -423,6 +476,8 @@ function styleCP()
       };
       return options;
 }
+
+//Function for building the complexity points graph
 function buildCP(results, count, cp_data)
 {
         var platform_offset = 12;
@@ -432,8 +487,7 @@ function buildCP(results, count, cp_data)
         bugs_invalid_iOS = results[count].bugs_invalid; 
         bugs_cp_iOS = results[count].story_data.complexity_points;
         bugs_total_iOS = bugs_total_iOS - bugs_invalid_iOS; 
-        ratio_iOS = bugs_total_iOS/bugs_cp_iOS;
-
+        ratio_iOS = bugs_total_iOS/bugs_cp_iOS; 
         var android = count + platform_offset;
 
         //Android 
@@ -447,140 +501,23 @@ function buildCP(results, count, cp_data)
         cp_data.addRow([count,ratio_iOS,ratio_android, ratio_avg]); 
 }
 
-function drawBugsCP(results)
+//Function for building the blocker, critical, major graphs
+function buildBCM(results, count, bcm_data)
 {
-      var data = new google.visualization.DataTable();
-
-      data.addColumn('number', 'X');
-      data.addColumn('number', 'iOS');
-      data.addColumn('number', 'Android');
-      data.addColumn('number','Avg');
-
-       var i = 0; 
-      //There are 4 quarters, 0-3 -> iOS 2012, 
-      var platform_offset = 12;
-      console.log("Length: " + results.length);
-      while (i < (results.length/2))
-      {
-        console.log("i: " + i);
-        //console.log("Data: " + JSON.stringify(results[i]));
-
-        //iOS 
-        bugs_total_iOS = results[i].bugs_total;
-        bugs_invalid_iOS = results[i].bugs_invalid; 
-        bugs_cp_iOS = results[i].story_data.complexity_points;
-        //console.log("iOS Complexity Points: " + bugs_cp_iOS);
-        bugs_total_iOS = bugs_total_iOS - bugs_invalid_iOS; 
-        //console.log("iOS Total Bugs: " + bugs_total_iOS);
-        ratio_iOS = bugs_total_iOS/bugs_cp_iOS;
-
-        var android = i + platform_offset;
-        console.log("Data: " + JSON.stringify(results[android]));
-
-        //Android 
-        bugs_total_android = results[android].bugs_total;
-        bugs_invalid_android = results[android].bugs_invalid; 
-        bugs_cp_android = results[android].story_data.complexity_points;
-        console.log("Android Complexity Points: " + bugs_cp_android);
-        bugs_total_android = bugs_total_android - bugs_invalid_android;
-        console.log("Android Total Bugs: " + bugs_total_android);
-        ratio_android = bugs_total_android/bugs_cp_android;
-
-        ratio_avg = (ratio_android + ratio_iOS)/2 
-        i++;
-        data.addRow([i,ratio_iOS,ratio_android, 1]); 
-      }
-
-      var options = {
-        width: 1000,
-        height: 563,
-        hAxis: {
-          title: 'By Quarter',
-          ticks: [{v:1,f:'2012 - Q1'}, {v:2,f:'2012 - Q2'}, {v:3,f:'2012 - Q3'}, {v:4,f:'2012 - Q4'},{v:5,f:'2013 - Q1'}, {v:6,f:'2013 - Q2'}, {v:7,f:'2013 - Q3'}, {v:8,f:'2013 - Q1'},
-                  {v:9,f:'2014 - Q1'}, {v:10,f:'2013 - Q2'}, {v:11,f:'2013 - Q3'}, {v:12,f:'2013 - Q4'}],
-
-          textStyle: {
-            color: '#000000',
-            fontSize: 12, 
-            bold: true,
-            italic: true
-          },
-          titleTextStyle: {
-            color: '#000000',
-            fontSize: 24,
-            fontName: 'Arial',
-            bold: false,
-            italic: true
-          }
-        },
-        vAxis: {
-          title: 'Percentage',
-          textStyle: {
-            color: '#000000',
-            fontSize: 18, 
-            bold: true
-          },
-          titleTextStyle: {
-            color: '#000000',
-            fontSize: 24, 
-            bold: true
-          },
-          gridlines: {color: '#333', count: 8}
-        },
-        colors: ['#097138', '#a52714','#0000FF'],
-        trendlines: {
-          0: {type: 'linear', color: '#000000', opacity: .4}
-        }
-
-      };
-      var chart = new google.visualization.LineChart(document.getElementById('bugs_cp_chart'));
-
-      chart.draw(data, options); 
-      
-}
-
-function drawBCMBugs(results)
-{
-	  var data = new google.visualization.DataTable();
-      data.addColumn('number', 'X');
-      data.addColumn('number', 'iOS');
-      data.addColumn('number', 'Android');
-      data.addColumn('number','Avg');
-
-      var options = {
-        width: 1000,
-        height: 563,
-        hAxis: {
-          title: 'Time'
-        },
-        vAxis: {
-          title: 'Popularity'
-        },
-        series: {
-          1: {curveType: 'function'}
-        }
-      };
-
-      var i = 0; 
-      //There are 4 quarters, 0-3 -> iOS 2012, 
-      var platform_offset = 12;
-      console.log("Length: " + results.length);
-      while (i < (results.length/2))
-      {
         //console.log("i: " + i);
-      	//console.log("Data: " + JSON.stringify(results[i]));
-
+        //console.log("Data: " + JSON.stringify(results[i]));
+        var platform_offset = 12;
         //iOS
-      	bugs_major_iOS = results[i].bugs_major;
-      	bugs_critical_iOS = results[i].bugs_critical;
-      	bugs_blocker_iOS = results[i].bugs_blocker;
-      	bugs_total_iOS = results[i].bugs_total;
-      	bugs_invalid_iOS = results[i].bugs_invalid;
-      	bugs_bcm_iOS = bugs_blocker_iOS + bugs_critical_iOS + bugs_major_iOS;
-      	bugs_total_iOS = bugs_total_iOS - bugs_invalid_iOS;
-      	ratio_iOS = bugs_bcm_iOS/bugs_total_iOS;
+        bugs_major_iOS = results[count].bugs_major;
+        bugs_critical_iOS = results[count].bugs_critical;
+        bugs_blocker_iOS = results[count].bugs_blocker;
+        bugs_total_iOS = results[count].bugs_total;
+        bugs_invalid_iOS = results[count].bugs_invalid;
+        bugs_bcm_iOS = bugs_blocker_iOS + bugs_critical_iOS + bugs_major_iOS;
+        bugs_total_iOS = bugs_total_iOS - bugs_invalid_iOS;
+        ratio_iOS = bugs_bcm_iOS/bugs_total_iOS;
 
-        var android = i + platform_offset;
+        var android = count + platform_offset;
         //Android
         bugs_major_android = results[android].bugs_major;
         bugs_critical_android = results[android].bugs_critical;
@@ -592,56 +529,32 @@ function drawBCMBugs(results)
         ratio_android = bugs_bcm_android/bugs_total_android;
 
         ratio_avg = (ratio_android + ratio_iOS)/2 
-        i++;
-        data.addRow([i,ratio_iOS,ratio_android, ratio_avg]); 
-      }
-      
-       var options = {
-        width: 1000,
-        height: 563,
-        hAxis: {
-          title: 'By Quarter',
-          ticks: [{v:1,f:'2012 - Q1'}, {v:2,f:'2012 - Q2'}, {v:3,f:'2012 - Q3'}, {v:4,f:'2012 - Q4'},{v:5,f:'2013 - Q1'}, {v:6,f:'2013 - Q2'}, {v:7,f:'2013 - Q3'}, {v:8,f:'2013 - Q1'},
-                  {v:9,f:'2014 - Q1'}, {v:10,f:'2013 - Q2'}, {v:11,f:'2013 - Q3'}, {v:12,f:'2013 - Q4'}],
+        count++;
+        bcm_data.addRow([count,ratio_iOS,ratio_android, ratio_avg]); 
+}
 
-          textStyle: {
-            color: '#000000',
-            fontSize: 12, 
-            bold: true,
-            italic: true
-          },
-          titleTextStyle: {
-            color: '#000000',
-            fontSize: 24,
-            fontName: 'Arial',
-            bold: false,
-            italic: true
-          }
-        },
-        vAxis: {
-          title: 'Percentage',
-          textStyle: {
-            color: '#000000',
-            fontSize: 18, 
-            bold: true
-          },
-          titleTextStyle: {
-            color: '#000000',
-            fontSize: 24, 
-            bold: true
-          },
-          gridlines: {color: '#333', count: 8}
-        },
-        colors: ['#097138', '#a52714','#0000FF'],
-        trendlines: {
-          0: {type: 'linear', color: '#000000', opacity: .4}
-        }
+//Slippage ratio is the ratio of client reported bugs to total bugs
+function buildSlippage(results, count, slippage_data)
+{
+        //console.log("i: " + i);
+        //console.log("Data: " + JSON.stringify(results[i]));
+        var platform_offset = 12;
 
-      };
+        //iOS 
+        bugs_total_iOS = results[count].bugs_total;  
+        bugs_client_reported = results[count].bugs_client_reported;
+        ratio_iOS = bugs_client_reported/bugs_total_iOS;
 
-      var chart = new google.visualization.LineChart(document.getElementById('bcm_chart'));
+        var android = count + platform_offset;
 
-      chart.draw(data, options); 
+        //Android 
+        bugs_total_android = results[android].bugs_total; 
+        bugs_client_reported = results[android].bugs_client_reported;
+        ratio_android = bugs_client_reported/bugs_total_android;
+
+        ratio_avg = (ratio_android + ratio_iOS)/2 
+        count++;
+        slippage_data.addRow([count,ratio_iOS,ratio_android, ratio_avg]); 
 
 }
 
