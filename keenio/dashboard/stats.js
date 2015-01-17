@@ -5,9 +5,6 @@ var client = new Keen({
 
 Keen.ready(function(){
 
-  var interval = "daily"
-  var timeframe = "last_30_days"
-
   var bugs_2014 = new Keen.Query("sum", {
     eventCollection: "product_snapshot_final",
     targetProperty: "bug_type.total_bugs",
