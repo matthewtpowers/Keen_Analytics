@@ -385,6 +385,7 @@ function drawAllCharts(results)
       var cp_data = new google.visualization.DataTable(); 
       var bcm_data = new google.visualization.DataTable();
       var slippage_data = new google.visualization.DataTable();
+      var invalid_data = new google.visualization.DataTable();
 
       //Setup the columns for the graphs
       cp_data.addColumn('number', 'X');
@@ -402,6 +403,11 @@ function drawAllCharts(results)
       slippage_data.addColumn('number', 'Android');
       slippage_data.addColumn('number','Avg');
 
+      invalid_data.addColumn('number', 'X');
+      invalid_data.addColumn('number', 'iOS');
+      invalid_data.addColumn('number', 'Android');
+      invalid_data.addColumn('number','Avg');
+
       var count = 0;
       while (count < results.length/2)
       {
@@ -409,9 +415,11 @@ function drawAllCharts(results)
         buildCP(results, count, cp_data);
         buildBCM(results, count, bcm_data);
         buildSlippage(results, count, slippage_data);
+        buildInvalid(results,count,invalid_data);
         count++; 
-
       }
+
+
       //Style the CP Chart
       var options = styleGraphs();
       console.log("Done Building CP"); 
@@ -419,11 +427,12 @@ function drawAllCharts(results)
       var cp_chart = new google.visualization.LineChart(document.getElementById('bugs_cp_chart'));
       var bcm_chart = new google.visualization.LineChart(document.getElementById('bcm_chart')); 
       var slippage_chart = new google.visualization.LineChart(document.getElementById("bugs_slippage_chart"));
+      var invalid_chart = new google.visualization.LineChart(document.getElementById("bugs_invalid_chart"))
  
       cp_chart.draw(cp_data, options); 
       bcm_chart.draw(bcm_data, options);
       slippage_chart.draw(slippage_data, options);
-      
+      invalid_chart.draw(invalid_data, options);
 
       console.log("done drawing the chart");
 
@@ -501,6 +510,27 @@ function buildCP(results, count, cp_data)
         cp_data.addRow([count,ratio_iOS,ratio_android, ratio_avg]); 
 }
 
+//Function for building the invalid bug ratio
+function buildInvalid(results, count, invalid_data)
+{
+        //console.log("i: " + i)
+        //console.log("Data: " + JSON.stringify(results[i]));
+        var platform_offset = 12;
+        //iOS 
+        bugs_total_iOS = results[count].bugs_total;
+        bugs_invalid_iOS = results[count].bugs_invalid;
+        ratio_iOS = bugs_invalid_iOS/bugs_total_iOS;
+
+        var android = count + platform_offset;
+        //Android
+        bugs_total_android = results[android].bugs_total;
+        bugs_invalid_android = results[android].bugs_invalid;
+        ratio_android = bugs_invalid_android/bugs_total_android;
+
+        ratio_avg = (ratio_android + ratio_iOS)/2 
+        count++;
+        invalid_data.addRow([count,ratio_iOS,ratio_android, ratio_avg]); 
+}
 //Function for building the blocker, critical, major graphs
 function buildBCM(results, count, bcm_data)
 {
