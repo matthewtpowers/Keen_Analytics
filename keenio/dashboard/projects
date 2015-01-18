@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard Starter UI, by Keen IO</title>
+  <link rel="stylesheet" href="assets/lib/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/keen-dashboards.css">
+</head>
+<body class="application">
+
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../">
+          <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="navbar-brand" href="./">Dashboard Starter UI</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-left">
+          <li><a href="https://keen.io">Home</a></li>
+          <li><a href="https://keen.io/team">Projects</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+
+      <div class="col-sm-6">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+           Blocker Critical Major to Total Bugs Ratio
+          </div>
+          <div class="chart-stage" id="bcm_chart">  
+          </div>
+          <div class="chart-notes">
+            This chart illurstrates the BCM (Blocker Critical Major) bugs to Total Bugs (- Invalid Bugs) Quarter over Quarter on every platform.  This metric gives us a 
+            sense of waste and quality that the teams are outputting.
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+            All Bugs to Complexity Point Ratio
+          </div>
+          <div class="chart-stage" id="bugs_cp_chart"> 
+          </div>
+          <div class="chart-notes">
+            This chart illustrates the amount of bugs we are generating as a function of complexity points on our applications.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="row">
+
+      <div class="col-sm-6">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+            Slippate Ratio (Bugs Released/Bugs in Production)
+          </div>
+          <div class="chart-stage" id="bugs_slippage_chart"> 
+          </div>
+          <div class="chart-notes">
+            This chart illustrates the amount of bugs that we are releasing to our clients.  Slippage ratio is the number of bugs released to our clients divided by the total number of bugs on the platform.
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+            Invalid Bugs
+          </div>
+          <div class="chart-stage" id="bugs_invalid_chart"> 
+          </div>
+          <div class="chart-notes">
+            This chart illustrates the amount of invalid bugs on our projects as a ratio to total bugs.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <hr>
+
+    <p class="small text-muted">Built with &#9829; by <a href="https://keen.io">Keen IO</a></p>
+
+  </div>
+
+  <script src="assets/lib/jquery/dist/jquery.min.js"></script>
+  <script src="assets/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+  <script src="assets/lib/holderjs/holder.js"></script>
+  <script>
+    Holder.add_theme("white", { background:"#fff", foreground:"#a7a7a7", size:10 });
+  </script>
+
+  <script src="assets/lib/keen-js/dist/keen.min.js"></script>
+  <script src="assets/js/meta.js"></script>
+
+  <script src="stats.js"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+  <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      </script>
+
+
+
+
+</body>
+</html>
