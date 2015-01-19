@@ -9,6 +9,26 @@
   <link rel="stylesheet" href="assets/css/keen-dashboards.css">
   <link rel="stylesheet" href="css/projects.css">
 </head>
+
+<!-- Mapbox.js Assets -->
+  <script src='https://api.tiles.mapbox.com/mapbox.js/v2.0.0/mapbox.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox.js/v2.0.0/mapbox.css' rel='stylesheet' />
+  <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-heat/v0.1.0/leaflet-heat.js'></script>
+
+  <script src="assets/lib/jquery/dist/jquery.min.js"></script>
+  <script src="assets/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="assets/lib/jquery-knob/dist/jquery.knob.min.js"></script>
+
+  <script src="assets/lib/keen-js/dist/keen.min.js"></script>
+  <script src="assets/js/meta.js"></script>
+
+  <script src="project_stats.js"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+  <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+  </script>
+
 <body class="application">
 
   <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -23,7 +43,7 @@
         <a class="navbar-brand" href="../">
           <span class="glyphicon glyphicon-chevron-left"></span>
         </a>
-        <a class="navbar-brand" href="./">Connected Devices</a>
+        <a class="navbar-brand" href="./">Applico Projects</a>
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-left">
@@ -44,8 +64,8 @@
       <div class="col-sm-6">
 
         <div class="chart-wrapper">
-          <div class="chart-title">
-            Traffic Stats
+          <div class="chart-title" id="project_title">
+            Projects
           </div>
           <div class="chart-stage">
             <div class="row">
@@ -73,22 +93,58 @@
           </div>
           <div class="chart-stage">
             <div class="row">
-              <div class="col-sm-6">
+              <div class="col-sm-4">
                 <div class="chart-title knob-title">
-                  New Activations Today
+                  Total CP
                 </div>
-                <div class="chart-stage">
-                  <input type="text" class="users" value="0"/>
+                <div class="chart-title knob-title">
+                  100
                 </div>
               </div>
-              <div class="col-sm-6">
+              <div class="col-sm-4">
                 <div class="chart-title knob-title">
-                  Device Crashes Today
+                  Total Bugs
                 </div>
-                <div class="chart-stage">
-                  <input type="text" class="errors" value="0"/>
+                <div class="chart-title knob-title">
+                  100
                 </div>
               </div>
+               <div class="col-sm-4">
+                <div class="chart-title knob-title">
+                  CR Bugs
+                </div>
+                <div class="chart-title knob-title">
+                  100
+                </div>
+              </div>
+             
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="chart-title knob-title">
+                  Total Test Cases
+                </div>
+                <div class="chart-title knob-title">
+                  
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="chart-title knob-title">
+                  Test Cases Passed
+                </div>
+                <div class="chart-title knob-title">
+                  100
+                </div>
+              </div>
+               <div class="col-sm-4">
+                <div class="chart-title knob-title">
+                  Test Cases Failed
+                </div>
+                <div class="chart-title knob-title">
+                  100
+                </div>
+              </div>
+             
             </div>
           </div>
         </div>
@@ -128,24 +184,7 @@
       </div>
     </div>
 
-  <!-- Mapbox.js Assets -->
-  <script src='https://api.tiles.mapbox.com/mapbox.js/v2.0.0/mapbox.js'></script>
-  <link href='https://api.tiles.mapbox.com/mapbox.js/v2.0.0/mapbox.css' rel='stylesheet' />
-  <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-heat/v0.1.0/leaflet-heat.js'></script>
-
-  <script src="assets/lib/jquery/dist/jquery.min.js"></script>
-  <script src="assets/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="assets/lib/jquery-knob/dist/jquery.knob.min.js"></script>
-
-  <script src="assets/lib/keen-js/dist/keen.min.js"></script>
-  <script src="assets/js/meta.js"></script>
-
-  <script src="project_stats.js"></script>
-  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-
-  <script type="text/javascript">
-      google.load("visualization", "1", {packages:["corechart"]});
-      </script>
+  
 
   <!--<script src="connected-devices.js"></script>-->
 

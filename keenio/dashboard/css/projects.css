@@ -133,3 +133,67 @@
 }
 
 
+/**
+ * List used for the demo page
+ */
+.wave ul {
+  position: relative;
+  width: 230px;
+  height: 480px;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  list-style: none;
+
+  -webkit-perspective: 400px;
+     -moz-perspective: 400px;
+      -ms-perspective: 400px;
+       -o-perspective: 400px;
+          perspective: 400px;
+}
+  .wave ul li {
+    position: relative;
+    padding: 16px;
+    background: #eee;
+    color: #252525;
+    font-size: 18px;
+    z-index: 2;
+
+    -webkit-transform: translateZ(0px);
+       -moz-transform: translateZ(0px);
+        -ms-transform: translateZ(0px);
+         -o-transform: translateZ(0px);
+            transform: translateZ(0px);
+  }
+  .wave ul li:nth-child(odd) {
+    background: #fff;
+  }
+
+/* List Items */
+/**
+ * Wave styles
+ */
+.wave li {
+  -webkit-transition: all 600ms cubic-bezier(0.260, 0.860, 0.440, 0.985);
+     -moz-transition: all 600ms cubic-bezier(0.260, 0.860, 0.440, 0.985);
+      -ms-transition: all 600ms cubic-bezier(0.260, 0.860, 0.440, 0.985);
+       -o-transition: all 600ms cubic-bezier(0.260, 0.860, 0.440, 0.985);
+          transition: all 600ms cubic-bezier(0.260, 0.860, 0.440, 0.985);
+}
+  .wave li.past {
+    -webkit-transform: translateX( -70% );
+       -moz-transform: translateX( -70% );
+        -ms-transform: translateX( -70% );
+         -o-transform: translateX( -70% );
+            transform: translateX( -70% );
+  }
+  .wave li.future {
+    -webkit-transform: translateX( -70% );
+       -moz-transform: translateX( -70% );
+        -ms-transform: translateX( -70% );
+         -o-transform: translateX( -70% );
+            transform: translateX( -70% );
+  }
+
+

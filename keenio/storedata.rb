@@ -9,7 +9,7 @@ ruby_file = "ruby_string"
 ## Keen IO is limited in the sense I can't do the operations as a total sum on the latest records, I need to keep track of the deltas unfortunately.  It actually makes sense 
 ## if you want to time lapse this
 begin
-event_props =  {:product_snapshot =>
+event_props =  {:product_snapshot_final =>
 	[
 					{ 
 						:product => "APP-14-042_Caster_Android", 

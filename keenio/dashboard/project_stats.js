@@ -3,6 +3,65 @@ var client = new Keen({
   readKey: "4215930a9b497fd9aa4c199e986f846b07f9fa6d8d9f0f16f26c23de3fa44c47320d3e145fc0b18d3771836c13227a31f72cfb2e3f3a64b3aa435973433ce9630db36becee258ec0eeb5bf028c92509f0dbfdd4d3f8539bbb811969adefe42b1eed9d8a7b9a37cf9787181e8999053d9"
 }); 
 
+function loadup(id)
+{
+  console.log("Load Project: " + id); 
+
+  var project_data = new Keen.Query("multi_analysis", {
+    eventCollection: "product_snapshot_final",
+    analyses: {"dev": {
+              "analysis_type": "select_unique",
+              "target_property":
+              "team_data.dev"
+            },
+           "design": {
+              "analysis_type": "select_unique",
+              "target_property":
+              "team_data.design"
+            },
+          "qa": {
+              "analysis_type": "select_unique",
+              "target_property":
+              "team_data.qa"
+            },
+          "product": {
+              "analysis_type": "select_unique",
+              "target_property":
+              "team_data.product"
+           },
+          "total_bugs": {
+              "analysis_type": "select_unique",
+              "target_property":
+              "bug_type.total_bugs"
+           }
+
+
+         },
+    groupBy: "keen.timestamp",
+    filters: [{"property_name":"product","operator":"eq","property_value":id}]
+  });
+
+  client.run([project_data], function(response){ // run the queries\
+    data = response.result  // data from first query
+    console.log("Client Data: " + JSON.stringify(data));
+    
+    drawTeam(data, id);   
+
+
+    });
+}
+
+function drawTeam(data, id)
+{
+  var holder = document.getElementById('project_title');
+  holder.innerHTML = id;
+}
+
+function drawCharts()
+{
+
+}
+
 Keen.ready(function(){
 
   var projects = [];
@@ -69,12 +128,12 @@ client.run([projects], function(response){ // run the queries\
     projects = response.result  // data from first query
     //Probably can do this with Keen
     projects.reverse();
-    console.log("About to draw Project");
     //drawTotalBugsChart(data);
     loadProjectData();
     drawProjects();
     
 });
+
 
 function loadProjectData()
 {
@@ -84,20 +143,36 @@ function loadProjectData()
     var list = document.createElement("div");
     list.className = "tab-pane";
     list.id = projects[i].start_year;
-    var listtext = document.createTextNode(projects[i].start_year);
-    list.appendChild(listtext);
+    console.log("About to start the loop");
+    var listelement = document.createElement("ul");
+    listelement.className = "wave";
+
+    for(j = 0; j < projects[i].result.length; j++)
+    {
+      console.log("Project: " + projects[i].result[j]);
+      var ahref = document.createElement("a"); 
+      ahref.href = "#";
+      ahref.setAttribute("id",projects[i].result[j]);
+      ahref.setAttribute("onclick", "javascript:loadup(this.id);");
+      var text = document.createTextNode(projects[i].result[j]);
+      var listitem = document.createElement("li");
+      ahref.appendChild(text);
+      listitem.appendChild(ahref);
+      listelement.appendChild(listitem);
+    }
+    list.appendChild(listelement);
     holder.appendChild(list);
   }
   //<div class="tab-pane active" id="visitors">Hello</div>
   //               <div class="tab-pane" id="browser">Yellow</div>
   //               <div class="tab-pane" id="geography">Mello</div>
 }
+
 function drawProjects()
 {
 
 
-
-  console.log("Data: " + JSON.stringify(projects));
+ 
   console.log("Results: " + projects.length);
   var holder = document.getElementById('year_tabs');
 
@@ -109,6 +184,7 @@ function drawProjects()
     ahref.href = "#" + projects[i].start_year;
     ahref.setAttribute("data-toggle","tab");
     var listtext = document.createTextNode(projects[i].start_year);
+    console.log("Projects: " + projects[i].result.length); 
     ahref.appendChild(listtext);
     list.appendChild(ahref);
     holder.appendChild(list);
