@@ -33,9 +33,33 @@ function loadup(id)
               "analysis_type": "select_unique",
               "target_property":
               "bug_type.total_bugs"
+           },
+           "critical_bugs": {
+              "analysis_type": "select_unique",
+              "target_property":
+              "bug_type.critical"
+           },
+           "major_bugs": {
+              "analysis_type": "select_unique",
+              "target_property":
+              "bug_type.major"
+           },
+           "design_bugs": {
+              "analysis_type": "select_unique",
+              "target_property":
+              "bug_type.design"
+           },
+           "cp": {
+              "analysis_type": "select_unique",
+              "target_property":
+              "story_data.complexity_points"
+           },
+           "reopened_stories": {
+              "analysis_type": "select_unique",
+              "target_property":
+              "story_data.reopened_stories"
            }
-
-
+           
          },
     groupBy: "keen.timestamp",
     filters: [{"property_name":"product","operator":"eq","property_value":id}]
@@ -44,17 +68,43 @@ function loadup(id)
   client.run([project_data], function(response){ // run the queries\
     data = response.result  // data from first query
     console.log("Client Data: " + JSON.stringify(data));
-    
-    drawTeam(data, id);   
-
-
+    drawTotalStats(data, id);   
     });
 }
 
-function drawTeam(data, id)
+function drawTotalStats(data, id)
 {
   var holder = document.getElementById('project_title');
   holder.innerHTML = id;
+  
+  total_bugs = 0;
+  critical_bugs = 0;
+  major_bugs = 0;
+  design_bugs = 0;
+
+  test_case_total = "N/A";
+  test_case_passed = "N/A";
+  test_case_failed = "N/A";
+
+  cp_total = 0;
+
+  for(i=0; i < data.length; i++)
+  {
+    console.log("Total Bugs:" + data[i].total_bugs);
+    total_bugs += data[i].total_bugs;
+    console.log("Design Bugs: " + data[i].design_bugs);
+    design_bugs += data[i].design_bugs;
+    console.log("Major Bugs: " + data[i].major_bugs);
+    major_bugs += data[i].major_bugs;
+    console.log("Critical Bugs: " + data[i].critical_bugs);
+    critical_bugs += data[i].critical_bugs;
+    console.log("Complexity Points: " + data[i].cp);
+    cp += cp[i].cp;
+
+  }
+
+
+
 }
 
 function drawCharts()
@@ -74,54 +124,6 @@ Keen.ready(function(){
   });
 
 
-
-  var multi_query_bcm_2012_iOS = new Keen.Query("multi_analysis", {
-    eventCollection: "product_snapshot_final",
-    analyses: {"bugs_blocker": {
-    					"analysis_type": "sum",
-    					"target_property":
-    					"bug_type.blocker"
-    				},
-    		   "bugs_critical": {
-    					"analysis_type": "sum",
-    					"target_property":
-    					"bug_type.critical"
-    				},
-    			"bugs_major": {
-    					"analysis_type": "sum",
-    					"target_property":
-    					"bug_type.major"
-    				},
-    			"bugs_total":
-    				{
-    					"analysis_type": "sum",
-    					"target_property":
-    					"bug_type.total_bugs"
-    				},
-    			"bugs_invalid":
-    				{
-    					"analysis_type": "sum",
-    					"target_property":
-    					"bug_type.invalid"
-    				},
-            "bugs_client_reported":
-            {
-              "analysis_type": "sum",
-              "target_property":
-              "bug_type.client_reported"
-            },
-            "story_data.complexity_points":
-            {
-              "analysis_type": "sum",
-              "target_property":
-              "story_data.complexity_points"
-            }
-
-
-    		  },
-    groupBy: "quarter",
-    filters: [{"property_name":"start_year","operator":"eq","property_value":2012},{"property_name":"platform","operator":"eq","property_value":"iOS"}]
-  });
 
 
 client.run([projects], function(response){ // run the queries\

@@ -3,7 +3,7 @@
 <head>
   <meta charset='utf-8' />
   <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
-  <title>Connected Devices</title>
+  <title>Applico Project Stats</title>
 
   <link rel="stylesheet" href="assets/lib/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/css/keen-dashboards.css">
@@ -47,10 +47,8 @@
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-left">
-          <li><a href="https://keen.io">Home</a></li>
-          <li><a href="https://keen.io/team">Team</a></li>
-          <li><a href="https://github.com/keenlabs/dashboards/tree/gh-pages/examples/connected-devices">Source</a></li>
-          <li><a href="https://groups.google.com/forum/#!forum/keen-io-devs">Community</a></li><li><a href="http://stackoverflow.com/questions/tagged/keen-io?sort=newest&pageSize=15">Technical Support</a></li>
+          <li><a href="index_applico.html">Home</a></li>
+          <li><a href="#">Projects</a></li>
         </ul>
       </div>
     </div>
@@ -95,26 +93,26 @@
             <div class="row">
               <div class="col-sm-4">
                 <div class="chart-title knob-title">
-                  Total CP
+                  Total Bugs
                 </div>
-                <div class="chart-title knob-title">
-                  100
+                <div class="chart-title knob-title" id="total_bugs">
+                  N/A
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="chart-title knob-title">
-                  Total Bugs
+                  Critical Bugs
                 </div>
-                <div class="chart-title knob-title">
-                  100
+                <div class="chart-title knob-title" id="critical_bugs">
+                  N/A
                 </div>
               </div>
                <div class="col-sm-4">
                 <div class="chart-title knob-title">
-                  CR Bugs
+                  Major Bugs
                 </div>
-                <div class="chart-title knob-title">
-                  100
+                <div class="chart-title knob-title" id="major_bugs">
+                  N/A
                 </div>
               </div>
              
@@ -125,7 +123,7 @@
                   Total Test Cases
                 </div>
                 <div class="chart-title knob-title">
-                  
+                N/A
                 </div>
               </div>
               <div class="col-sm-4">
@@ -133,7 +131,7 @@
                   Test Cases Passed
                 </div>
                 <div class="chart-title knob-title">
-                  100
+                  N/A
                 </div>
               </div>
                <div class="col-sm-4">
@@ -141,9 +139,27 @@
                   Test Cases Failed
                 </div>
                 <div class="chart-title knob-title">
-                  100
+                  N/A
                 </div>
               </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="chart-title knob-title">
+                  Total Design Bugs
+                </div>
+                <div class="chart-title knob-title" id="total_design_bugs">
+                N/A
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="chart-title knob-title">
+                  Total Complexity Points
+                </div>
+                <div class="chart-title knob-title" id="total_complexity_points">
+                  N/A
+                </div>
+              </div> 
              
             </div>
           </div>
