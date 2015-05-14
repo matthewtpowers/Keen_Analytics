@@ -12,96 +12,6 @@ begin
 event_props =  {:product_snapshot_final =>
 	[
 					{ 
-						:product => "APP-14-042_Caster_Android", 
-						:platform => "Android",
-						:start_year => 2014,
-						:quarter => 4,
-						:bug_type => 
-						{
-							:blocker => 0,
-							:critical => 0,
-							:major => 3,
-							:normal => 5,
-							:minor => 0,
-							:design => 6,
-							:enhancement => 0,
-							:total_bugs =>  14,
-							:reopened => 0,
-							:invalid => 0,
-							:client_reported => 0
-						},
-						:story_data => 
-						{
-							:requirements => 0,
-							:reopened_stories => 0,
-							:complexity_points => 2
-						},
-						:qa_data =>
-						{
-							:total_test_cases => 0,
-							:test_cases_passed => 0,
-							:test_cases_failed => 0,
-						},
-						:team_data =>
-						{
-							:qa => ["Ronak"],
-							:dev => ["Kenny"],
-							:product => ["Chaitanya","David"],
-							:design => ["Matt"],
-						},
-						:store_rating =>
-						{ 
-							:dates_released=>[""],
-							:total_reviews=> 0,
-							:stars => 0
-						}
-					},
-					{ 
-						:product => "APP-14-042_Caster_iOS", 
-						:platform => "iOS",
-						:start_year => 2014,
-						:quarter => 4,
-						:bug_type => 
-						{
-							:blocker => 0,
-							:critical => 0,
-							:major => 2,
-							:normal => 11,
-							:minor => 0,
-							:design => 7,
-							:enhancement => 0,
-							:total_bugs => 13,
-							:reopened => 0,
-							:invalid => 1,
-							:client_reported => 0
-						},
-						:story_data => 
-						{
-							:requirements => 0,
-							:reopened_stories => 0,
-							:complexity_points => 0
-						},
-						:qa_data =>
-						{
-							:total_test_cases => 0,
-							:test_cases_passed => 0,
-							:test_cases_failed => 0,
-						},
-						:team_data =>
-						{
-							:qa => ["Ronak"],
-							:dev => ["Amir","Josh"],
-							:product => ["Chaitanya","David"],
-							:design => ["Matt"],
-						},
-						:store_rating =>
-						{ 
-							:dates_released=>[""],
-							:total_reviews=> 0,
-							:stars => 0
-						}
-					},
-					{ 
 						:product => "APP-15-004_Branch_Metrics", 
 						:platform => "Xamarin",
 						:start_year => 2015,
@@ -111,20 +21,20 @@ event_props =  {:product_snapshot_final =>
 							:blocker => 0,
 							:critical => 0,
 							:major => 0,
-							:normal => 4,
-							:minor => 0,
+							:normal => 6,
+							:minor => 1,
 							:design => 0,
-							:enhancement => 0,
+							:enhancement => 1,
 							:total_bugs => 5,
 							:reopened => 0,
 							:invalid => 1,
-							:client_reported => 1
+							:client_reported => 0
 						},
 						:story_data => 
 						{
 							:requirements => 0,
 							:reopened_stories => 0,
-							:complexity_points => 23
+							:complexity_points => 82
 						},
 						:qa_data =>
 						{
@@ -147,51 +57,6 @@ event_props =  {:product_snapshot_final =>
 						}
 					},
 					{ 
-						:product => "APP-15-006_Gatsby_Prototyping", 
-						:platform => "iOS",
-						:start_year => 2015,
-						:quarter => 1,
-						:bug_type => 
-						{
-							:blocker => 0,
-							:critical => 0,
-							:major => 0,
-							:normal => 0,
-							:minor => 0,
-							:design => 0,
-							:enhancement => 0,
-							:total_bugs => 0,
-							:reopened => 0,
-							:invalid => 0,
-							:client_reported => 0
-						},
-						:story_data => 
-						{
-							:requirements => 0,
-							:reopened_stories => 0,
-							:complexity_points => 0
-						},
-						:qa_data =>
-						{
-							:total_test_cases => 0,
-							:test_cases_passed => 0,
-							:test_cases_failed => 0,
-						},
-						:team_data =>
-						{
-							:qa => ["Ronak", "Dan"],
-							:dev => ["Arun"],
-							:product => ["Nick", "David"],
-							:design => ["David A"],
-						},
-						:store_rating =>
-						{ 
-							:dates_released=>[""],
-							:total_reviews=> 0,
-							:stars => 0
-						}
-					},
-					{ 
 						:product => "APP-15-007_Turtle_Beach_Retainer", 
 						:platform => "Android",
 						:start_year => 2015,
@@ -200,21 +65,21 @@ event_props =  {:product_snapshot_final =>
 						{
 							:blocker => 0,
 							:critical => 0,
-							:major => 1,
-							:normal => 13,
-							:minor => 3,
-							:design => 5,
+							:major => 0,
+							:normal => 16,
+							:minor => 6,
+							:design => 14,
 							:enhancement => 0,
-							:total_bugs => 22,
+							:total_bugs => 36,
 							:reopened => 0,
-							:invalid => 0,
+							:invalid => 1,
 							:client_reported => 0
 						},
 						:story_data => 
 						{
 							:requirements => 0,
 							:reopened_stories => 0,
-							:complexity_points => 20
+							:complexity_points => 70
 						},
 						:qa_data =>
 						{
@@ -245,21 +110,20 @@ event_props =  {:product_snapshot_final =>
 						{
 							:blocker => 0,
 							:critical => 0,
-							:major => 0,
-							:normal => 0,
-							:minor => 0,
-							:design => 0,
+							:major => 2,
+							:normal => 6,
+							:minor => 5,
+							:design => 1,
 							:enhancement => 0,
-							:total_bugs => 0,
+							:total_bugs => 14,
 							:reopened => 0,
 							:invalid => 0,
-							:client_reported => 0
-						},
+							:client_reported => 0						},
 						:story_data => 
 						{
 							:requirements => 0,
 							:reopened_stories => 0,
-							:complexity_points => 0
+							:complexity_points => 63
 						},
 						:qa_data =>
 						{
@@ -271,7 +135,7 @@ event_props =  {:product_snapshot_final =>
 						{
 							:qa => ["Ronak", "Dan"],
 							:dev => ["Rehmat"],
-							:product => ["Daivd", "Sarah"],
+							:product => ["David"],
 							:design => ["Matt K"],
 						},
 						:store_rating =>
@@ -290,12 +154,12 @@ event_props =  {:product_snapshot_final =>
 						{
 							:blocker => 0,
 							:critical => 0,
-							:major => 0,
-							:normal => 0,
-							:minor => 0,
-							:design => 0,
+							:major => 4,
+							:normal => 10,
+							:minor => 7,
+							:design => 16,
 							:enhancement => 0,
-							:total_bugs => 0,
+							:total_bugs => 37,
 							:reopened => 0,
 							:invalid => 0,
 							:client_reported => 0
@@ -304,7 +168,7 @@ event_props =  {:product_snapshot_final =>
 						{
 							:requirements => 0,
 							:reopened_stories => 0,
-							:complexity_points => 0
+							:complexity_points => 50
 						},
 						:qa_data =>
 						{

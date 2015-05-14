@@ -99,7 +99,7 @@ function drawTotalStats(data, id)
     console.log("Critical Bugs: " + data[i].critical_bugs);
     critical_bugs += data[i].critical_bugs;
     console.log("Complexity Points: " + data[i].cp);
-    cp += cp[i].cp;
+    cp_total += data[i].cp;
 
   }
 
